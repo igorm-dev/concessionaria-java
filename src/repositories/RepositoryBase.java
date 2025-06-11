@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RepositoryBase<T> {
+    String criarUUID();
+
     void salvar(T entity);
 
     void deletar(String id);

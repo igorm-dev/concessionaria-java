@@ -1,6 +1,6 @@
 package model;
 
-public class Venda {
+public final class Venda {
     private String id;
     private Cliente cliente;
     private Veiculo veiculo;
@@ -9,6 +9,13 @@ public class Venda {
 
     public Venda(String id, Cliente cliente, Veiculo veiculo, MetodoPagamento metodoPagamento, double valorTotal) {
         this.id = id;
+        this.cliente = cliente;
+        this.veiculo = veiculo;
+        this.metodoPagamento = metodoPagamento;
+        this.valorTotal = valorTotal;
+    }
+
+    public Venda(Cliente cliente, Veiculo veiculo, MetodoPagamento metodoPagamento, double valorTotal) {
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.metodoPagamento = metodoPagamento;

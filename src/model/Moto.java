@@ -1,15 +1,15 @@
 package model;
 
-import utils.Util;
-
-public class Moto extends Veiculo {
-    private static final String UUID_PREFIX = "mot-";
-
+public final class Moto extends Veiculo {
     private boolean temDescansoLateral;
     
-    public Moto(String marca, String modelo, String cor, double preco, boolean temDescansoLateral) {
-        super(Util.criarUUID(UUID_PREFIX), marca, modelo, cor, preco);
+    public Moto(String id, String marca, String modelo, String placa, String cor, boolean temDescansoLateral) {
+        super(id, marca, modelo, placa, cor);
+        this.temDescansoLateral = temDescansoLateral;
+    }
 
+    public Moto(String marca, String modelo, String placa, String cor, boolean temDescansoLateral) {
+        super(marca, modelo, placa, cor);
         this.temDescansoLateral = temDescansoLateral;
     }
 

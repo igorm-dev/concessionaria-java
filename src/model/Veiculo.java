@@ -6,14 +6,20 @@ public abstract class Veiculo {
     protected String modelo;
     protected String placa;
     protected String cor;
-    protected double preco;
 
-    protected Veiculo(String id, String marca, String modelo, String cor, double preco) {
+    public Veiculo(String id, String marca, String modelo, String placa, String cor) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
+        this.placa = placa;
         this.cor = cor;
-        this.preco = preco;
+    }
+
+    public Veiculo(String marca, String modelo, String placa, String cor) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.placa = placa;
+        this.cor = cor;
     }
 
     public String getId() {
@@ -56,14 +62,6 @@ public abstract class Veiculo {
         this.cor = cor;
     }
 
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
     @Override
     public String toString() {
         return "VeiculoBase {" +
@@ -72,7 +70,6 @@ public abstract class Veiculo {
                 ", modelo='" + modelo + '\'' +
                 ", placa='" + placa + '\'' +
                 ", cor='" + cor + '\'' +
-                ", preco=" + preco +
                 '}';
     }
 }

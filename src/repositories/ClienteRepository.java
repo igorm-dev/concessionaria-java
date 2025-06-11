@@ -3,20 +3,28 @@ package repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import model.Cliente;
 
 public class ClienteRepository implements RepositoryBase<Cliente> {
     private static final List<Cliente> clientes = new ArrayList<>();
 
+    private final String UUID_PREFIX = "cli-";
+
+    @Override
+    public String criarUUID() {
+        return UUID_PREFIX + UUID.randomUUID().toString();
+    }
+
     @Override
     public void salvar(Cliente entity) {
+        entity.setId(this.criarUUID());
         clientes.add(entity);
     }
 
     @Override
     public void deletar(String id) {
         clientes.removeIf((cliente) -> cliente.getId().equals(id));
-        
     }
 
     @Override
@@ -30,7 +38,7 @@ public class ClienteRepository implements RepositoryBase<Cliente> {
     }
 
     @Override
-    public void atualizar(String id, Cliente entity) {
+    public void atualizar(String id, Cliente entity) throws IllegalArgumentException {
         Optional<Cliente> optionalCliente = this.pegarPorId(id);
         
         if (optionalCliente.isPresent()) {

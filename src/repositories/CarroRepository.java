@@ -43,14 +43,12 @@ public class CarroRepository implements RepositoryBase<Carro> {
         
         if (optionalVenda.isPresent()) {
             Carro carro = optionalVenda.get();
-            carro.setMarca(carro.getMarca());
+            carro.setMarca(entity.getMarca());
             carro.setModelo(entity.getModelo());
             carro.setCor(entity.getCor());
-            carro.setPreco(entity.getPreco());
             carro.setQuantidadePortas(entity.getQuantidadePortas());
         } else {
             throw new IllegalArgumentException("Carro com ID " + id + " não encontrada.");
         }
-        
     }
 }

@@ -1,15 +1,15 @@
 package model;
 
-import utils.Util;
-
-public class Carro extends Veiculo {
-    private static final String UUID_PREFIX = "car-";
-
+public final class Carro extends Veiculo {
     private int quantidadePortas;
 
-    public Carro(String marca, String modelo, String cor, double preco, int quantidadePortas) {
-        super(Util.criarUUID(UUID_PREFIX), marca, modelo, cor, preco);
+    public Carro(String id, String marca, String modelo, String placa, String cor, int quantidadePortas) {
+        super(id, marca, modelo, placa, cor);
+        this.quantidadePortas = quantidadePortas;
+    }
 
+    public Carro(String marca, String modelo, String placa, String cor, int quantidadePortas) {
+        super(marca, modelo, placa, cor);
         this.quantidadePortas = quantidadePortas;
     }
 

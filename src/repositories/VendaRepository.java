@@ -3,10 +3,18 @@ package repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import model.Venda;
 
 public class VendaRepository implements RepositoryBase<Venda> {
     public static final List<Venda> vendas = new ArrayList<>();
+
+    private final String UUID_PREFIX = "ven-";
+
+    @Override
+    public String criarUUID() {
+        return UUID_PREFIX + UUID.randomUUID().toString();
+    }
 
     @Override
     public void salvar(Venda entity) {

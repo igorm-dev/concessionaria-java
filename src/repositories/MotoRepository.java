@@ -3,10 +3,18 @@ package repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import model.Moto;
 
 public class MotoRepository implements RepositoryBase<Moto> {
     public static final List<Moto> motos = new ArrayList<>();
+
+    private final String UUID_PREFIX = "mot-";
+
+    @Override
+    public String criarUUID() {
+        return UUID_PREFIX + UUID.randomUUID().toString();
+    }
 
     @Override
     public void salvar(Moto entity) {
@@ -34,10 +42,9 @@ public class MotoRepository implements RepositoryBase<Moto> {
         
         if (optionalVenda.isPresent()) {
             Moto moto = optionalVenda.get();
-            moto.setMarca(moto.getMarca());
+            moto.setMarca(entity.getMarca());
             moto.setModelo(entity.getModelo());
             moto.setCor(entity.getCor());
-            moto.setPreco(entity.getPreco());
             moto.setTemDescansoLateral(entity.getTemDescansoLateral());
         } else {
             throw new IllegalArgumentException("Moto com ID " + id + " não encontrada.");
