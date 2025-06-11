@@ -1,3 +1,10 @@
+// Integrantes do projeto
+//
+// RGM: 37230255 - Daniel Henrique Marcos Rocha
+// RGM: 39379655 - Igor Ribeiro Machado
+// RGM: 37298135 - João Paulo Bertagia
+// RGM: 39107884 - Luis Henrique Silva de Lima
+// RGM: 38203235 - Luiz Augusto Santos Gumz
 
 import controllers.CarroController;
 import controllers.ClienteController;
@@ -12,14 +19,6 @@ import views.CarroView;
 import views.ClienteView;
 import views.MotoView;
 import views.VendaView;
-
-// Integrantes do projeto
-//
-// RGM: 37230255 - Daniel Henrique Marcos Rocha
-// RGM: 39379655 - Igor Ribeiro Machado
-// RGM: 37298135 - João Paulo Bertagia
-// RGM: 39107884 - Luis Henrique Silva de Lima
-// RGM: 38203235 - Luiz Augusto Santos Gumz
 
 public class App {
     public static void main(String[] args) throws Exception {
