@@ -69,7 +69,9 @@ public class CarroView {
         scanner.nextLine();
 
         try {
-            carroController.cadastrar(VeiculoFactory.criarNovoCarro(marca, modelo, placa, cor, quantidadePortas));
+            Carro novoCarro = VeiculoFactory.criarNovoCarro(marca, modelo, placa, cor, quantidadePortas);
+
+            carroController.cadastrar(novoCarro);
             System.out.println("Carro cadastrado com sucesso!");
         } catch (Exception e) {
             System.err.println("Erro ao cadastrar carro");
@@ -132,7 +134,7 @@ public class CarroView {
         scanner.nextLine();
 
         try {
-            Carro carroAtualizado = VeiculoFactory.criarCarroPersistido(id, marca, modelo, cor, quantidadePortas);
+            Carro carroAtualizado = VeiculoFactory.criarCarroPersistido(id, marca, modelo, placa, cor, quantidadePortas);
             carroController.atualizar(id, carroAtualizado);
 
             System.out.println("Carro atualizado com sucesso!");

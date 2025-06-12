@@ -135,7 +135,7 @@ public class MotoView {
         boolean temDescansoLateral = descansoLateralInput.equals("s");
 
         try {
-            Moto motoAtualizada = VeiculoFactory.criarMotoPersistida(id, marca, modelo, cor, temDescansoLateral);
+            Moto motoAtualizada = VeiculoFactory.criarMotoPersistida(id, marca, modelo, placa, cor, temDescansoLateral);
             motoController.atualizar(id, motoAtualizada);
 
             System.out.println("Moto atualizada com sucesso!");
