@@ -24,9 +24,14 @@ public final class Moto extends Veiculo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Moto{");
-        sb.append("temDescansoLateral=").append(temDescansoLateral);
-        sb.append('}');
+        sb.append("\nMoto {");
+        sb.append("\n\tid: ").append(this.id);
+        sb.append("\n\tmarca: ").append(this.marca);
+        sb.append("\n\tmodelo: ").append(this.modelo);
+        sb.append("\n\tplaca: ").append(this.placa);
+        sb.append("\n\tcor: ").append(this.cor);
+        sb.append("\n\ttemDescansoLateral=").append(temDescansoLateral);
+        sb.append("\n}\n");
         return sb.toString();
     }
 }
