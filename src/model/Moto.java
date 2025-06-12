@@ -1,6 +1,10 @@
 package model;
 
-public final class Moto extends Veiculo {
+import java.io.Serializable;
+
+public final class Moto extends Veiculo implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private boolean temDescansoLateral;
     
     public Moto(String id, String marca, String modelo, String placa, String cor, boolean temDescansoLateral) {

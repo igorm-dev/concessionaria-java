@@ -9,8 +9,6 @@ import utils.Desserializador;
 import utils.Serilizador;
 
 public class CarroRepository implements RepositoryBase<Carro> {
-    public static final List<Carro> carros = new ArrayList<>();
-
     private final String UUID_PREFIX = "car-";
     
     private final Serilizador<Carro> serilizador = new Serilizador<>();
@@ -25,39 +23,79 @@ public class CarroRepository implements RepositoryBase<Carro> {
 
     @Override
     public void salvar(Carro entity) {
-        entity.setId(this.criarUUID());
-        serilizador.salvar(entity, this.caminhoArquivo);
+        try {
+            entity.setId(this.criarUUID());
+    
+            List<Carro> carros = this.encontrarTodos();
+            carros.add(entity);
+    
+            serilizador.salvar(carros, this.caminhoArquivo);
+        } catch (Exception e) {
+            System.err.println("Erro ao salvar carro: " + e.getMessage());
+            throw new RuntimeException("Erro ao salvar carro", e);
+        }
     }
 
     @Override
     public void deletar(String id) {
-        carros.removeIf((carro) -> carro.getId().equals(id));
+        try {
+            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            carros.removeIf((carro) -> carro.getId().equals(id));
+            serilizador.salvar(carros, this.caminhoArquivo);
+        } catch (Exception e) {
+            System.err.println("Erro ao deletar carro: " + e.getMessage());
+            throw new RuntimeException("Erro ao deletar carro", e);
+        }
     }
 
     @Override
-    public List<Carro> encontrarTodos() {
-        return this.desserializador.carregar(this.caminhoArquivo);
+    public List<Carro> encontrarTodos() throws Exception {
+        try {
+            List<Carro> carrosAtuais = this.desserializador.carregar(this.caminhoArquivo);
 
-        // return carros;
+            if (carrosAtuais == null) {
+                return new ArrayList<>();
+            }
+
+            return carrosAtuais;
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar carros: " + e.getMessage());
+            throw new Exception("Erro ao carregar carros");
+        }
     }
 
     @Override
     public Optional<Carro> pegarPorId(String id) {
-        return carros.stream().filter(carro -> carro.getId().equals(id)).findFirst();
+        try {
+            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            return carros.stream().filter(carro -> carro.getId().equals(id)).findFirst();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar carro: " + e.getMessage());
+            throw new RuntimeException("Erro ao buscar carro");
+        }
     }
 
     @Override
     public void atualizar(String id, Carro entity) {
-        Optional<Carro> optionalVenda = this.pegarPorId(id);
-        
-        if (optionalVenda.isPresent()) {
-            Carro carro = optionalVenda.get();
-            carro.setMarca(entity.getMarca());
-            carro.setModelo(entity.getModelo());
-            carro.setCor(entity.getCor());
-            carro.setQuantidadePortas(entity.getQuantidadePortas());
-        } else {
-            throw new IllegalArgumentException("Carro com ID " + id + " não encontrada.");
+        try {
+            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            
+            Optional<Carro> optionalCarro = carros.stream().filter(carro -> carro.getId().equals(id)).findFirst();
+
+            if (optionalCarro.isPresent()) {
+                Carro carro = optionalCarro.get();
+                carro.setMarca(entity.getMarca());
+                carro.setModelo(entity.getModelo());
+                carro.setCor(entity.getCor());
+                carro.setQuantidadePortas(entity.getQuantidadePortas());
+
+                serilizador.salvar(carros, this.caminhoArquivo);
+            } else {
+                throw new IllegalArgumentException("Carro com ID " + id + " não encontrada.");
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao atualizar carro: " + e.getMessage());
+            throw new RuntimeException("Erro ao atualizar carro");
         }
     }
 }

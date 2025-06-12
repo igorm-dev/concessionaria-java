@@ -10,7 +10,7 @@ public interface RepositoryBase<T> {
 
     void deletar(String id);
 
-    List<T> encontrarTodos();
+    List<T> encontrarTodos() throws Exception;
     Optional<T> pegarPorId(String id);
     
     void atualizar(String id, T entity);

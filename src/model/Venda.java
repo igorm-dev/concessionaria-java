@@ -1,6 +1,10 @@
 package model;
 
-public final class Venda {
+import java.io.Serializable;
+
+public final class Venda implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private Cliente cliente;
     private Veiculo veiculo;
