@@ -18,6 +18,7 @@ public class MotoRepository implements RepositoryBase<Moto> {
 
     @Override
     public void salvar(Moto entity) {
+        entity.setId(this.criarUUID());
         motos.add(entity);
     }
 

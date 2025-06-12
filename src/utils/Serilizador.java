@@ -1,21 +1,16 @@
 package utils;
 
-public class Serilizador {
-    public static void salvar() {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
+public class Serilizador<T> {
+    public void salvar(T entity, String caminhoArquivo) {
+        try (FileOutputStream fos = new FileOutputStream(caminhoArquivo); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(entity);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar a entidade: " + e.getMessage());
+            System.err.println(e);
+        }
     }
 }
-
-
-// public class Serializador {
-//     public static void salvarCarro(Carro carro, String caminhoArquivo) {
-//         try (FileOutputStream fos = new FileOutputStream(caminhoArquivo);
-//              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-
-//             oos.writeObject(carro);
-//             System.out.println("Carro salvo com sucesso!");
-//         } catch (IOException e) {
-//             System.err.println("Erro ao salvar o carro: " + e.getMessage());
-//         }
-//     }
-// }

@@ -5,11 +5,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import model.Carro;
+import utils.Desserializador;
+import utils.Serilizador;
 
 public class CarroRepository implements RepositoryBase<Carro> {
     public static final List<Carro> carros = new ArrayList<>();
 
     private final String UUID_PREFIX = "car-";
+    
+    private final Serilizador<Carro> serilizador = new Serilizador<>();
+    private  final Desserializador<Carro> desserializador = new Desserializador<>();
+
+    private final String caminhoArquivo = "carros.ser";
 
     @Override
     public String criarUUID() {
@@ -19,11 +26,7 @@ public class CarroRepository implements RepositoryBase<Carro> {
     @Override
     public void salvar(Carro entity) {
         entity.setId(this.criarUUID());
-
-         
-
-
-        carros.add(entity);
+        serilizador.salvar(entity, this.caminhoArquivo);
     }
 
     @Override
@@ -33,7 +36,9 @@ public class CarroRepository implements RepositoryBase<Carro> {
 
     @Override
     public List<Carro> encontrarTodos() {
-        return carros;
+        return this.desserializador.carregar(this.caminhoArquivo);
+
+        // return carros;
     }
 
     @Override

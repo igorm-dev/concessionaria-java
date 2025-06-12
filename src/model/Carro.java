@@ -1,6 +1,8 @@
 package model;
 
 public final class Carro extends Veiculo {
+    private static final long serialVersionUID = 1L;
+
     private int quantidadePortas;
 
     public Carro(String id, String marca, String modelo, String placa, String cor, int quantidadePortas) {

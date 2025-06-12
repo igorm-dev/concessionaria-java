@@ -18,6 +18,7 @@ public class VendaRepository implements RepositoryBase<Venda> {
 
     @Override
     public void salvar(Venda entity) {
+        entity.setId(this.criarUUID());
         vendas.add(entity);
     }
 

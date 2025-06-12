@@ -64,7 +64,14 @@ public final class Venda {
 
     @Override
     public String toString() {
-        return "Venda [id=" + id + ", cliente=" + cliente + ", veiculo=" + veiculo + ", metodoPagamento="
-                + metodoPagamento + ", valorTotal=" + valorTotal + "]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nVenda {");
+        sb.append("\n\tid: ").append(this.id);
+        sb.append("\n\tcliente: ").append(this.cliente);
+        sb.append("\n\tveiculo: ").append(this.veiculo);
+        sb.append("\n\tmetodoPagamentov: ").append(this.metodoPagamento);
+        sb.append("\n\tvalorTotal: ").append(this.valorTotal);
+        sb.append("\n}\n");
+        return sb.toString();
     }
 }
