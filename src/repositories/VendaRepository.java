@@ -8,20 +8,15 @@ import model.Venda;
 import utils.Desserializador;
 import utils.Serilizador;
 
-public class VendaRepository implements RepositoryBase<Venda> {
-    private final Serilizador<Venda> serilizador = new Serilizador<>();
-    private  final Desserializador<Venda> desserializador = new Desserializador<>();
-
+public class VendaRepository {
     private final String caminhoArquivo = "vendas.ser";
 
     private final String UUID_PREFIX = "ven-";
 
-    @Override
     public String criarUUID() {
         return UUID_PREFIX + UUID.randomUUID().toString();
     }
 
-    @Override
     public void salvar(Venda entity) {
         try {
             entity.setId(this.criarUUID());
@@ -29,29 +24,27 @@ public class VendaRepository implements RepositoryBase<Venda> {
             List<Venda> vendas = this.encontrarTodos();
             vendas.add(entity);
     
-            serilizador.salvar(vendas, this.caminhoArquivo);
+            Serilizador.salvarVenda(vendas, this.caminhoArquivo);
         } catch (Exception e) {
             System.err.println("Erro ao salvar venda: " + e.getMessage());
             throw new RuntimeException("Erro ao salvar venda", e);
         }
     }
 
-    @Override
     public void deletar(String id) {
         try {
-            List<Venda> vendas = this.desserializador.carregar(this.caminhoArquivo);
+            List<Venda> vendas = Desserializador.carregarVenda(this.caminhoArquivo);
             vendas.removeIf((venda) -> venda.getId().equals(id));
-            serilizador.salvar(vendas, this.caminhoArquivo);
+            Serilizador.salvarVenda(vendas, this.caminhoArquivo);
         } catch (Exception e) {
             System.err.println("Erro ao deletar venda: " + e.getMessage());
             throw new RuntimeException("Erro ao deletar venda", e);
         }
     }
 
-    @Override
     public List<Venda> encontrarTodos() throws Exception {
         try {
-            List<Venda> vendas = this.desserializador.carregar(this.caminhoArquivo);
+            List<Venda> vendas = Desserializador.carregarVenda(this.caminhoArquivo);
 
             if (vendas == null) {
                 return new ArrayList<>();
@@ -64,10 +57,9 @@ public class VendaRepository implements RepositoryBase<Venda> {
         }
     }
 
-    @Override
     public Optional<Venda> pegarPorId(String id) {
         try {
-            List<Venda> vendas = this.desserializador.carregar(this.caminhoArquivo);
+            List<Venda> vendas = Desserializador.carregarVenda(this.caminhoArquivo);
             return vendas.stream().filter(venda -> venda.getId().equals(id)).findFirst();
         } catch (Exception e) {
             System.err.println("Erro ao buscar venda: " + e.getMessage());
@@ -75,10 +67,9 @@ public class VendaRepository implements RepositoryBase<Venda> {
         }
     }
 
-    @Override
     public void atualizar(String id, Venda entity) {
         try {
-            List<Venda> vendas = this.desserializador.carregar(this.caminhoArquivo);
+            List<Venda> vendas = Desserializador.carregarVenda(this.caminhoArquivo);
             
             Optional<Venda> optionalVenda = vendas.stream().filter(venda -> venda.getId().equals(id)).findFirst();
 
@@ -89,7 +80,7 @@ public class VendaRepository implements RepositoryBase<Venda> {
                 venda.setMetodoPagamento(entity.getMetodoPagamento());
                 venda.setValorTotal(entity.getValorTotal());
 
-                serilizador.salvar(vendas, this.caminhoArquivo);
+                Serilizador.salvarVenda(vendas, this.caminhoArquivo);
             } else {
                 throw new IllegalArgumentException("Venda com ID " + id + " não encontrada.");
             }

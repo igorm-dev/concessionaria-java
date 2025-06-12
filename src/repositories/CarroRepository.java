@@ -8,20 +8,15 @@ import model.Carro;
 import utils.Desserializador;
 import utils.Serilizador;
 
-public class CarroRepository implements RepositoryBase<Carro> {
+public class CarroRepository {
     private final String UUID_PREFIX = "car-";
-    
-    private final Serilizador<Carro> serilizador = new Serilizador<>();
-    private  final Desserializador<Carro> desserializador = new Desserializador<>();
 
-    private final String caminhoArquivo = "carros.ser";
+    private final String CAMINHO_ARQUIVO = "carros.ser";
 
-    @Override
     public String criarUUID() {
         return UUID_PREFIX + UUID.randomUUID().toString();
     }
 
-    @Override
     public void salvar(Carro entity) {
         try {
             entity.setId(this.criarUUID());
@@ -29,29 +24,27 @@ public class CarroRepository implements RepositoryBase<Carro> {
             List<Carro> carros = this.encontrarTodos();
             carros.add(entity);
     
-            serilizador.salvar(carros, this.caminhoArquivo);
+            Serilizador.salvarCarro(carros, this.CAMINHO_ARQUIVO);
         } catch (Exception e) {
             System.err.println("Erro ao salvar carro: " + e.getMessage());
             throw new RuntimeException("Erro ao salvar carro", e);
         }
     }
 
-    @Override
     public void deletar(String id) {
         try {
-            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            List<Carro> carros = Desserializador.carregarCarro(this.CAMINHO_ARQUIVO);
             carros.removeIf((carro) -> carro.getId().equals(id));
-            serilizador.salvar(carros, this.caminhoArquivo);
+            Serilizador.salvarCarro(carros, this.CAMINHO_ARQUIVO);
         } catch (Exception e) {
             System.err.println("Erro ao deletar carro: " + e.getMessage());
             throw new RuntimeException("Erro ao deletar carro", e);
         }
     }
 
-    @Override
     public List<Carro> encontrarTodos() throws Exception {
         try {
-            List<Carro> carrosAtuais = this.desserializador.carregar(this.caminhoArquivo);
+            List<Carro> carrosAtuais = Desserializador.carregarCarro(this.CAMINHO_ARQUIVO);
 
             if (carrosAtuais == null) {
                 return new ArrayList<>();
@@ -64,10 +57,9 @@ public class CarroRepository implements RepositoryBase<Carro> {
         }
     }
 
-    @Override
     public Optional<Carro> pegarPorId(String id) {
         try {
-            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            List<Carro> carros = Desserializador.carregarCarro(this.CAMINHO_ARQUIVO);
             return carros.stream().filter(carro -> carro.getId().equals(id)).findFirst();
         } catch (Exception e) {
             System.err.println("Erro ao buscar carro: " + e.getMessage());
@@ -75,10 +67,9 @@ public class CarroRepository implements RepositoryBase<Carro> {
         }
     }
 
-    @Override
     public void atualizar(String id, Carro entity) {
         try {
-            List<Carro> carros = this.desserializador.carregar(this.caminhoArquivo);
+            List<Carro> carros = Desserializador.carregarCarro(this.CAMINHO_ARQUIVO);
             
             Optional<Carro> optionalCarro = carros.stream().filter(carro -> carro.getId().equals(id)).findFirst();
 
@@ -89,7 +80,7 @@ public class CarroRepository implements RepositoryBase<Carro> {
                 carro.setCor(entity.getCor());
                 carro.setQuantidadePortas(entity.getQuantidadePortas());
 
-                serilizador.salvar(carros, this.caminhoArquivo);
+                Serilizador.salvarCarro(carros, this.CAMINHO_ARQUIVO);
             } else {
                 throw new IllegalArgumentException("Carro com ID " + id + " não encontrada.");
             }

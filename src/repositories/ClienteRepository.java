@@ -8,19 +8,14 @@ import model.Cliente;
 import utils.Desserializador;
 import utils.Serilizador;
 
-public class ClienteRepository implements RepositoryBase<Cliente> {
-    private final Serilizador<Cliente> serilizador = new Serilizador<>();
-    private  final Desserializador<Cliente> desserializador = new Desserializador<>();
-
+public class ClienteRepository {
     private final String UUID_PREFIX = "cli-";
     private final String caminhoArquivo = "clientes.ser";
 
-    @Override
     public String criarUUID() {
         return UUID_PREFIX + UUID.randomUUID().toString();
     }
 
-    @Override
     public void salvar(Cliente entity) {
         try {
             entity.setId(this.criarUUID());
@@ -28,29 +23,27 @@ public class ClienteRepository implements RepositoryBase<Cliente> {
             List<Cliente> clientes = this.encontrarTodos();
             clientes.add(entity);
     
-            serilizador.salvar(clientes, this.caminhoArquivo);
+            Serilizador.salvarCliente(clientes, this.caminhoArquivo);
         } catch (Exception e) {
             System.err.println("Erro ao salvar cliente: " + e.getMessage());
             throw new RuntimeException("Erro ao salvar cliente", e);
         }
     }
 
-    @Override
     public void deletar(String id) {
         try {
-            List<Cliente> clientes = this.desserializador.carregar(this.caminhoArquivo);
+            List<Cliente> clientes = Desserializador.carregarCliente(this.caminhoArquivo);
             clientes.removeIf((carro) -> carro.getId().equals(id));
-            serilizador.salvar(clientes, this.caminhoArquivo);
+            Serilizador.salvarCliente(clientes, this.caminhoArquivo);
         } catch (Exception e) {
             System.err.println("Erro ao deletar cliente: " + e.getMessage());
             throw new RuntimeException("Erro ao deletar cliente", e);
         }
     }
 
-    @Override
     public List<Cliente> encontrarTodos() throws Exception {
         try {
-            List<Cliente> clientes = this.desserializador.carregar(this.caminhoArquivo);
+            List<Cliente> clientes = Desserializador.carregarCliente(this.caminhoArquivo);
 
             if (clientes == null) {
                 return new ArrayList<>();
@@ -63,10 +56,9 @@ public class ClienteRepository implements RepositoryBase<Cliente> {
         }
     }
 
-    @Override
     public Optional<Cliente> pegarPorId(String id) {
         try {
-            List<Cliente> clientes = this.desserializador.carregar(this.caminhoArquivo);
+            List<Cliente> clientes = Desserializador.carregarCliente(this.caminhoArquivo);
             return clientes.stream().filter(carro -> carro.getId().equals(id)).findFirst();
         } catch (Exception e) {
             System.err.println("Erro ao buscar cliente: " + e.getMessage());
@@ -74,10 +66,9 @@ public class ClienteRepository implements RepositoryBase<Cliente> {
         }
     }
 
-    @Override
     public void atualizar(String id, Cliente entity) throws IllegalArgumentException {
         try {
-            List<Cliente> clientes = this.desserializador.carregar(this.caminhoArquivo);
+            List<Cliente> clientes = Desserializador.carregarCliente(this.caminhoArquivo);
             
             Optional<Cliente> optionalCliente = clientes.stream().filter(cliente -> cliente.getId().equals(id)).findFirst();
 
@@ -89,7 +80,7 @@ public class ClienteRepository implements RepositoryBase<Cliente> {
                 cliente.setCpf(entity.getCpf());
                 cliente.setDataNascimento(entity.getDataNascimento());
 
-                serilizador.salvar(clientes, this.caminhoArquivo);
+                Serilizador.salvarCliente(clientes, this.caminhoArquivo);
             } else {
                 throw new IllegalArgumentException("cliente com ID " + id + " não encontrada.");
             }

@@ -6,8 +6,8 @@ import java.util.Scanner;
 import model.Moto;
 
 public class MotoView {
-    private final Scanner scanner = new Scanner(System.in);
-    private final MotoController motoController;
+    private Scanner scanner = new Scanner(System.in);
+    private MotoController motoController;
 
     public MotoView(MotoController motoController) {
         this.motoController = motoController;

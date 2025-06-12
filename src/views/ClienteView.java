@@ -6,8 +6,8 @@ import java.util.Scanner;
 import model.Cliente;
 
 public class ClienteView {
-    private final Scanner scanner = new Scanner(System.in);
-    private final ClienteController clienteController;
+    private Scanner scanner = new Scanner(System.in);
+    private ClienteController clienteController;
 
     public ClienteView(ClienteController clienteController) {
         this.clienteController = clienteController;

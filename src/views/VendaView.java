@@ -12,13 +12,13 @@ import model.Veiculo;
 import model.Venda;
 
 public class VendaView {
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     
-    private final VendaController vendaController;
-    private final ClienteController clienteController;
+    private VendaController vendaController;
+    private ClienteController clienteController;
 
-    private final CarroController carroController;
-    private final MotoController motoController;
+    private CarroController carroController;
+    private MotoController motoController;
 
     public VendaView(VendaController vendaController, ClienteController clienteController, CarroController carroController, MotoController motoController) {
         this.clienteController = clienteController;

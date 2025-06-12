@@ -6,8 +6,8 @@ import java.util.Scanner;
 import model.Carro;
 
 public class CarroView {
-    private final Scanner scanner = new Scanner(System.in);
-    private final CarroController carroController;
+    private Scanner scanner = new Scanner(System.in);
+    private CarroController carroController;
 
     public CarroView(CarroController carroController) {
         this.carroController = carroController;
