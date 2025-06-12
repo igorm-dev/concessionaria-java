@@ -24,9 +24,14 @@ public final class Carro extends Veiculo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Carro {");
-        sb.append("quantidadePortas=").append(quantidadePortas);
-        sb.append('}');
+        sb.append("\nCarro {");
+        sb.append("\n\tid: ").append(this.id);
+        sb.append("\n\tmarca: ").append(this.marca);
+        sb.append("\n\tmodelo: ").append(this.modelo);
+        sb.append("\n\tplaca: ").append(this.placa);
+        sb.append("\n\tcor: ").append(this.cor);
+        sb.append("\n\tquantidadePortas: ").append(this.quantidadePortas);
+        sb.append("\n}\n");
         return sb.toString();
     }
 }

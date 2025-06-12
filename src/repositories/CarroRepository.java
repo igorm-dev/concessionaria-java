@@ -19,6 +19,10 @@ public class CarroRepository implements RepositoryBase<Carro> {
     @Override
     public void salvar(Carro entity) {
         entity.setId(this.criarUUID());
+
+         
+
+
         carros.add(entity);
     }
 
